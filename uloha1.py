@@ -14,7 +14,9 @@ def hleda_nejkratsi_cestu_potrubi():
 
 # Hleda nejkratsi cestu na hadice pro body na vedlejsich stranach
 def hleda_nejkratsi_cestu_hadice_vedlejsi():
-    
+    nejkratsi_cesta = []
+
+    return nejkratsi_cesta
 
 # Hleda nejkratsi cestu na hadice pro body na protilehlych stranach
 def hleda_nejkratsi_cestu_hadice_naproti():
@@ -145,6 +147,6 @@ elif strana_bod1 == strana_bod2 and bod1[poradi_bod1 - 1] == bod2[poradi_bod2 - 
 
     print(f"Nejkratší cesta potrubí je:  {sum_nejkratsi_cesta} \nNejkratší cesta hadice je: {sum_nejkratsi_cesta}")
     
-# Pokud jsou na stranach protilehlych zavola se podminky na vypocitani cesty potrubi a hadice
+# Pokud jsou na stranach protilehlych zavolaji se podminky na vypocitani cesty potrubi a hadice
 elif strana_bod1 == strana_bod2:
     print(f"Nejkratší cesta potrubí je:  {hleda_nejkratsi_cestu_potrubi()} \nNejkratší cesta hadice je: {hleda_nejkratsi_cestu_hadice_naproti()}")
