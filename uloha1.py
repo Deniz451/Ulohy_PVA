@@ -1,11 +1,28 @@
 
+import math
+
 # Hleda nejkratsi cestu na potrubi pro body na protilehlych stranach
-def hleda_nejkratsi_cestu():
+def hleda_nejkratsi_cestu_potrubi():
     nejkratsi_cesta = []
     nejkratsi_cesta.append(bod1[1] + a + bod2[1] + abs(bod2[0] - bod1[0]))
     nejkratsi_cesta.append((a - bod1[1]) + a + (a - bod2[1]) + abs(bod2[0] - bod1[0]))
     nejkratsi_cesta.append(bod1[0] + a + bod2[0] + abs(bod2[1] - bod1[1]))
     nejkratsi_cesta.append((a - bod1[0]) + a + (a - bod2[0]) + abs(bod2[1] - bod1[1]))
+
+    nejkratsi_cesta = min(nejkratsi_cesta)
+    return nejkratsi_cesta
+
+# Hleda nejkratsi cestu na hadice pro body na vedlejsich stranach
+def hleda_nejkratsi_cestu_hadice_vedlejsi():
+    
+
+# Hleda nejkratsi cestu na hadice pro body na protilehlych stranach
+def hleda_nejkratsi_cestu_hadice_naproti():
+    nejkratsi_cesta = []
+    nejkratsi_cesta.append(math.sqrt((bod1[1] + a + bod2[1])**2 + (abs(bod2[0] - bod1[0]))**2))
+    nejkratsi_cesta.append(math.sqrt(((a - bod1[1]) + a + (a - bod2[1]))**2 + (abs(bod2[0] - bod1[0]))**2))
+    nejkratsi_cesta.append(math.sqrt((bod1[0] + a + bod2[0])**2 + (abs(bod2[1] - bod1[1]))**2))
+    nejkratsi_cesta.append(math.sqrt(((a - bod1[0]) + a + (a - bod2[0]))**2 + (abs(bod2[1] - bod1[1]))**2))
 
     nejkratsi_cesta = min(nejkratsi_cesta)
     return nejkratsi_cesta
@@ -112,22 +129,22 @@ else:
 
 # Hledani nejkratsi cesty potrubi
 # Podminka, ktera zjistuje, zda jsou body na sousednich stranach
-# Pokud jous na vedlejsich stranach tak se odectou souradnice bodu a sectou se jejich abs
+# Pokud jsou na vedlejsich stranach tak se odectou souradnice bodu a sectou se jejich abs
 if strana_bod1 != strana_bod2:
     nejkratsi_cesta = tuple(abs(x - y) for x, y in zip(bod1, bod2))
 
     sum_nejkratsi_cesta = sum(nejkratsi_cesta)
 
-    print(f"Nejkratší cesta potrubí je:  {sum_nejkratsi_cesta}")
+    print(f"Nejkratší cesta potrubí je:  {sum_nejkratsi_cesta} \nNejkratší cesta hadice je: {hleda_nejkratsi_cestu_hadice_vedlejsi()}")
 
+# Pokud jsou body na stejne strane vypocita delku
+elif strana_bod1 == strana_bod2 and bod1[poradi_bod1 - 1] == bod2[poradi_bod2 - 1]:
+    nejkratsi_cesta = tuple(abs(x - y) for x, y in zip(bod1, bod2))
+
+    sum_nejkratsi_cesta = sum(nejkratsi_cesta)
+
+    print(f"Nejkratší cesta potrubí je:  {sum_nejkratsi_cesta} \nNejkratší cesta hadice je: {sum_nejkratsi_cesta}")
+    
+# Pokud jsou na stranach protilehlych zavola se podminky na vypocitani cesty potrubi a hadice
 elif strana_bod1 == strana_bod2:
-
-    print(f"Nejkratší cesta potrubí je:  {hleda_nejkratsi_cestu()}")
-
-nejkratsi_cesta = []
-nejkratsi_cesta.append(bod1[1] + a + bod2[1] + abs(bod2[0] - bod1[0]))
-nejkratsi_cesta.append((a - bod1[1]) + a + (a - bod2[1]) + abs(bod2[0] - bod1[0]))
-nejkratsi_cesta.append(bod1[0] + a + bod2[0] + abs(bod2[1] - bod1[1]))
-nejkratsi_cesta.append((a - bod1[0]) + a + (a - bod2[0]) + abs(bod2[1] - bod1[1]))
-
-print(nejkratsi_cesta)
+    print(f"Nejkratší cesta potrubí je:  {hleda_nejkratsi_cestu_potrubi()} \nNejkratší cesta hadice je: {hleda_nejkratsi_cestu_hadice_naproti()}")
