@@ -14,7 +14,14 @@ def hleda_nejkratsi_cestu_potrubi():
 
 # Hleda nejkratsi cestu na hadice pro body na vedlejsich stranach
 def hleda_nejkratsi_cestu_hadice_vedlejsi():
-    nejkratsi_cesta = []
+    
+    # Vypocita hadici pokud jsou oba body na spravnych stranach
+    if  bod1[poradi_bod1 - 1] == bod2[poradi_bod2 - 1]:
+        nejkratsi_cesta = math.sqrt((bod1[poradi_bod2 - 1] + bod2[poradi_bod1 - 1])**2 + 80**2)
+
+    # Vypocita hadici pokud jsou oba body na spatnych stranach
+    elif  bod1[poradi_bod1 - 1] != bod2[poradi_bod2 - 1]:
+        nejkratsi_cesta = math.sqrt(((a -bod1[poradi_bod2 - 1]) + bod2[poradi_bod1 - 1])**2 + 80**2)
 
     return nejkratsi_cesta
 
