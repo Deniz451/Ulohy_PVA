@@ -1,9 +1,22 @@
+
+# Hleda nejkratsi cestu na potrubi pro body na protilehlych stranach
+def hleda_nejkratsi_cestu():
+    nejkratsi_cesta = []
+    nejkratsi_cesta.append(bod1[1] + a + bod2[1] + abs(bod2[0] - bod1[0]))
+    nejkratsi_cesta.append((a - bod1[1]) + a + (a - bod2[1]) + abs(bod2[0] - bod1[0]))
+    nejkratsi_cesta.append(bod1[0] + a + bod2[0] + abs(bod2[1] - bod1[1]))
+    nejkratsi_cesta.append((a - bod1[0]) + a + (a - bod2[0]) + abs(bod2[1] - bod1[1]))
+
+    nejkratsi_cesta = min(nejkratsi_cesta)
+    return nejkratsi_cesta
+
+
 # Funkce, hledajici stranu, na ktere lezi bod
 def najdi_stranu_bodu(souradnice_bodu, hledana_hodnota1,  hledana_hodnota2):
     # Nejdriv hleda 0 v tuplu
     try:
         index = souradnice_bodu.index(hledana_hodnota1)
-        poradi = index + 1  # Přidáváme 1, protože indexy jsou od 0
+        poradi = index + 1  # Pridavame 1, protoze indexy jsou od 0
         souradnice = None
 
         if index == 0:
@@ -15,10 +28,10 @@ def najdi_stranu_bodu(souradnice_bodu, hledana_hodnota1,  hledana_hodnota2):
 
         return poradi, souradnice
     
-    # Pokud nenajde nulu snayi se najit hodnotu a
+    # Pokud nenajde nulu snazi se najit hodnotu a
     except ValueError:
         index = souradnice_bodu.index(hledana_hodnota2)
-        poradi = index + 1  # Přidáváme 1, protože indexy jsou od 0
+        poradi = index + 1  # Pridavame 1, protoze indexy jsou od 0
         souradnice = None
 
         if index == 0:
@@ -30,15 +43,15 @@ def najdi_stranu_bodu(souradnice_bodu, hledana_hodnota1,  hledana_hodnota2):
 
         return poradi, souradnice
     
-# Input místnosti
+# Input mistnosti
 a = input("Rozměr hrany pokoje: ")
 
-# Input bodů
+# Input bodu
 bod1 = input("#1: ")
 bod2 = input("#2: ")
 
-
-# Vradit spatny inputy místnosti
+#Kontrola spatnych inputu
+# Vradit spatny inputy mistnosti
 try:
     a = int(a)
 except:
@@ -68,7 +81,7 @@ else:
     print("Nesprávný vstup - Bod leží mimo stěny/strop/podlahu")
     exit()
 
-# Vyradi inputy, ne lezi na stene nebo ktere lezi na hrane
+# Vyradi inputy, ktere nelezi na stene nebo ktere lezi na hrane
 if sum(1 for coord in bod1 if coord == 0) == 1 or sum(1 for coord in bod1 if coord == a) == 1 and \
     sum(1 for coord in bod2 if coord == 0) == 1 or sum(1 for coord in bod2 if coord == a) == 1:
 
@@ -81,20 +94,40 @@ if sum(1 for coord in bod1 if coord == 0) == 1 or sum(1 for coord in bod1 if coo
         print("Nesprávný vstup - Bod leží mimo stěny/strop/podlahu")
         exit()
 
-    # Vypise stranu, na ktere se body nachazeji
-    print(f"V tuplu bod1 leží na straně: {strana_bod1} a je na pozici {poradi_bod1}")
-    print(f"V tuplu bod1 leží na straně: {strana_bod2} a je na pozici {poradi_bod2}")
-
     zbyva_bod1 = [coord for i, coord in enumerate(bod1) if i != poradi_bod1 - 1]
     zbyva_bod2 = [coord for i, coord in enumerate(bod2) if i != poradi_bod2 - 1]
 
-    if all(coord <= a - 20 for coord in zbyva_bod1) and all(coord <= a - 20 for coord in zbyva_bod2):
-        print("Všechny podmínky jsou splněny.")
+    # Kontroluje, zda jsou body aspon 20cm od hrany
+    if all(coord <= a - 20 for coord in zbyva_bod1) and all(coord <= a - 20 for coord in zbyva_bod2) and \
+        all(coord >= 20 for coord in zbyva_bod1) and all(coord >= 20 for coord in zbyva_bod2):
+
+        print("Všechny podmínky jsou splněny")
     else:
         print("Nesprávný vstup - Bod je moc blízko hrany pokoje")
         exit()
         
 else:
-    print("Nesprávný vstup")
+    print("Nesprávný vstup - Bod leží mimo stěny/strop/podlahu")
     exit()
 
+# Hledani nejkratsi cesty potrubi
+# Podminka, ktera zjistuje, zda jsou body na sousednich stranach
+# Pokud jous na vedlejsich stranach tak se odectou souradnice bodu a sectou se jejich abs
+if strana_bod1 != strana_bod2:
+    nejkratsi_cesta = tuple(abs(x - y) for x, y in zip(bod1, bod2))
+
+    sum_nejkratsi_cesta = sum(nejkratsi_cesta)
+
+    print(f"Nejkratší cesta potrubí je:  {sum_nejkratsi_cesta}")
+
+elif strana_bod1 == strana_bod2:
+
+    print(f"Nejkratší cesta potrubí je:  {hleda_nejkratsi_cestu()}")
+
+nejkratsi_cesta = []
+nejkratsi_cesta.append(bod1[1] + a + bod2[1] + abs(bod2[0] - bod1[0]))
+nejkratsi_cesta.append((a - bod1[1]) + a + (a - bod2[1]) + abs(bod2[0] - bod1[0]))
+nejkratsi_cesta.append(bod1[0] + a + bod2[0] + abs(bod2[1] - bod1[1]))
+nejkratsi_cesta.append((a - bod1[0]) + a + (a - bod2[0]) + abs(bod2[1] - bod1[1]))
+
+print(nejkratsi_cesta)
