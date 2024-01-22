@@ -13,17 +13,24 @@ def hleda_nejkratsi_cestu_potrubi():
     return nejkratsi_cesta
 
 # Hleda nejkratsi cestu na hadice pro body na vedlejsich stranach
+
 def hleda_nejkratsi_cestu_hadice_vedlejsi():
     
+    zbyvajici_bod1 = [coord for i, coord in enumerate(bod1) if i != poradi_bod1 - 1 and i != poradi_bod2 - 1]
+    zbyvajici_bod2 = [coord for i, coord in enumerate(bod2) if i != poradi_bod2 - 1 and i != poradi_bod1 - 1]
+    zbyvajici_bod1 = int(zbyvajici_bod1[0])
+    zbyvajici_bod2 = int(zbyvajici_bod2[0])
+
     # Vypocita hadici pokud jsou oba body na spravnych stranach
     if  bod1[poradi_bod1 - 1] == bod2[poradi_bod2 - 1]:
-        nejkratsi_cesta = math.sqrt((bod1[poradi_bod2 - 1] + bod2[poradi_bod1 - 1])**2 + 80**2)
+        nejkratsi_cesta = math.sqrt((bod1[poradi_bod2 - 1] + bod2[poradi_bod1 - 1])**2 + (zbyvajici_bod1 - zbyvajici_bod2)**2)
 
     # Vypocita hadici pokud jsou oba body na spatnych stranach
     elif  bod1[poradi_bod1 - 1] != bod2[poradi_bod2 - 1]:
-        nejkratsi_cesta = math.sqrt(((a -bod1[poradi_bod2 - 1]) + bod2[poradi_bod1 - 1])**2 + 80**2)
+        nejkratsi_cesta = math.sqrt(((a - bod1[poradi_bod2 - 1]) + bod2[poradi_bod1 - 1])**2 + a - (zbyvajici_bod1 - zbyvajici_bod2)**2)
 
     return nejkratsi_cesta
+
 
 # Hleda nejkratsi cestu na hadice pro body na protilehlych stranach
 def hleda_nejkratsi_cestu_hadice_naproti():
