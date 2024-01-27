@@ -1,17 +1,5 @@
 from decimal import Decimal
 
-def calculate_slope(x1, y1, x2, y2):
-    if x2 - x1 == 0:
-        return float('inf')
-    return (y2 - y1) / (x2 - x1)
-
-def are_points_collinear(x1, y1, x2, y2, x3, y3):
-    # Koukáme, zda jsou body na stejný přímce
-    slope_1 = calculate_slope(x1, y1, x2, y2)
-    slope_2 = calculate_slope(x1, y1, x3, y3)
-
-    return slope_1 == slope_2
-
 def find_middle_point(x1, y1, x2, y2, x3, y3):
     x_values = [x1, x2, x3]
     y_values = [y1, y2, y3]
@@ -31,10 +19,18 @@ def find_middle_point(x1, y1, x2, y2, x3, y3):
         return "Unknown"
 
 def are_points_merge(x1, y1, x2, y2, x3, y3):
-    if x1 and y1 == x2 and y2 or x1 and y1 == x3 and y3 or x2 and y2 == x3 and y3:
+
+    if x1 == x2 and y1 == y2 or x1 == x3 and y1 == y3 or x2 == x3 and y2 == y3:
         return True
     else:
         return False
+
+def determinant(x1, y1, x2, y2, x3, y3):
+    return x1*y2 + x2*y3 + x3*y1 - x1*y3 - x2*y1 - x3*y2
+
+def are_points_collinear(x1, y1, x2, y2, x3, y3):
+    return determinant(x1, y1, x2, y2, x3, y3) == 0
+
 
 # Bereme input
 try:
@@ -61,4 +57,4 @@ elif are_points_collinear(x1, y1, x2, y2, x3, y3):
 
 # Body neleží na stejné přímce
 else:
-    print("Body nelezi na jedne primce.")
+    print("\nBody nelezi na jedne primce.")
