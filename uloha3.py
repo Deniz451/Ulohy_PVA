@@ -1,42 +1,42 @@
 def is_palindrome(num_str):
     return num_str == num_str[::-1]
 
-def nextPalindrome(from_num, radix, next_palindrome):
-    # Ověření platnosti číselné soustavy
-    if radix < 2 or radix > 36:
-        return 0  # Neplatná číselná soustava
-
-    # Převod from_num do desítkové soustavy
+def convert_to_decimal(num_str, radix):
     try:
-        from_num_decimal = int(str(from_num), radix)
+        return int(num_str, radix)
     except ValueError:
-        return 0  # Chyba při převodu do desítkové soustavy
+        return None
 
-    # Hledání nejbližšího většího palindromu
+def convert_from_decimal(num, radix):
+    return format(num, f'0{len(str(num))}d')
+
+def nextPalindrome(from_num, radix, next_palindrome):
+    if radix < 2 or radix > 36:
+        return 0
+
+    from_num_decimal = convert_to_decimal(str(from_num), radix)
+    if from_num_decimal is None:
+        return 0
+
     while True:
         from_num_decimal += 1
-        next_palindrome_str = str(format(from_num_decimal, f'0{len(str(from_num))}d'))
+        next_palindrome_str = convert_from_decimal(from_num_decimal, 10)
 
         if is_palindrome(next_palindrome_str):
-            try:
-                next_palindrome[0] = int(next_palindrome_str, 10)
-            except ValueError:
-                return 0  # Chyba při převodu zpět do zadané soustavy
+            next_palindrome[0] = convert_to_decimal(next_palindrome_str, 10)
+            return 1
 
-            return 1  # Úspěch
 
-        # Ověření, zda se nevejde do rozsahu unsigned long long
         if from_num_decimal > 2**64 - 1:
-            return 0  # Nebylo možné najít větší palindrom
+            return 0
 
-# Příklad použití funkce
 from_num = 123
-radix = 20
+radix = 10
 next_palindrome = [0]
 
 result = nextPalindrome(from_num, radix, next_palindrome)
 
 if result:
-    print(f"Next palindrome greater than {from_num} in radix {radix}: {next_palindrome[0]}")
+    print(f"Další palindrom od čísla {from_num} v soustavě {radix}: {next_palindrome[0]}")
 else:
-    print("Invalid radix or unable to find a palindrome greater than from_num.")
+    print("Špatný input.")
